@@ -1,0 +1,122 @@
+* Readme.txt for mcmc f90 library, Marko Laine 2012 <marko.laine@fmi.fi>
+
+Copyrights licensed under a MIT License.
+See the accompanying LICENSE.txt file for terms.
+
+This fortran 90 library can be used to do Markov chain Monte Carlo
+simulation from a posterior distribution of unknown model parameters
+defined by a likelihood function and prior. The likelihood is given as
+"sum-of-squares" difference of observed values from modelled values.
+This is typically something like =sum((data-model)**2)=, which then
+corresponds to =-2*log(p(ydata|parameters))=.
+
+The code uses random walk Metropolis-Hastings with multivariate
+Gaussian proposal and does adaptation according to Adaptive Metropolis,
+AM or DRAM.
+
+#+BEGIN_EXAMPLE fortran
+The user written sum-of-squares function returns -2*log(p(obs|theta))
+  interface
+     function ssfunction(theta,npar,ny)
+       integer*4 npar, ny
+       real*8 theta(npar), ssfunction(ny)
+     end function ssfunction
+  end interface
+#+END_EXAMPLE
+
+The optional prior function returns =-2*log(p(theta))=
+#+BEGIN_EXAMPLE fortran
+  interface
+     function priorfun(theta,len)
+       integer*4 len
+       real*8 theta(len), priorfun
+     end function priorfun
+  end interface
+#+END_EXAMPLE
+
+Minimal main program to be linked with the library and the ssfunction
+(and priorfun) is:
+
+#+BEGIN_EXAMPLE fortran
+program mcmcmain
+  call mcmc_main()
+end program mcmcmain
+#+END_EXAMPLE
+
+Parameter bounds can be checked with
+#+BEGIN_EXAMPLE fortran
+  interface
+     function checkbounds(theta)
+       real*8 theta(:)
+       logical checkbounds
+     end function checkbounds
+  end interface
+#+END_EXAMPLE
+which returns =.false.= if theta must be rejected due to bounds or other
+prior constraints.
+
+Initial parameter values are read from an ASCII file =mcmcpar.dat= and
+initial proposal covariance matrix from =mcmccov.dat=. If observation
+error variance parameter sigma^2 is to be sampled using a Gibbs sampler
+with a conjugate prior, then the initial values for =sigma2= and the
+number of observations =n= is read from =mcmcsigma2.dat=.
+
+The chain is saved to a file that defaults to =chain.dat=. The last
+column tells how many times this row is repeated, so you need to
+expand the matrix for further calculations. Similarly for
+=sschain.dat=. The file =s2chain.dat=, if generated, is not compressed
+this way, however.
+
+The run time parameters for the MCMC run are read from a fortran
+namelist mcmcinit.nml. See the supplied mcmcinit.nml for an example.
+
+Here is a figure illustrating some of the parameters related to
+adaptation and burn-in.
+
+#+BEGIN_EXAMPLE
+          1 +-------------+
+            |             |
+            |             |
+            |             |
+            |             |
+            |             |
+            |             |
+   adaptint +-------------+ Greedy adapt or scale, greedy = 1, scale*= 
+            |             |   (maybe use badaptint if > 0)
+ burnintime +-------------+ Burnin scaling to this time if doburnin=1
+            |             |
+           /|             |
+adapthist < |             |
+           \|             |
+   adaptint +-------------+ Adapt if doadapt=1
+            |             |  uses chain from end of burnin to current index
+            |             |  or history 'adaphist' steps back
+            |             |
+           /|             |
+adapthist < |             |
+           \|             |
+   adaptint +-------------+ Adapt if doadapt=1 
+            |             | adaptation ends at 'adaptend'
+            |             |
+            |             |
+            |             |
+            |             |
+      nsimu +-------------+ 
+#+END_EXAMPLE
+
+
+Error variance prior: if =updatesigma = 1= then Gibbs sampling is done
+for error variance sigma^2, with prior given as =1/sigma^2 ~
+Gamma(N0/2,2/Nobs/S02)=, where S02 and N0 are given in
+=mcmcinit.nml=. This probably makes sense only for Gaussian error model,
+so with a strict sum-of-squares type likelihood.
+
+See the file =INSTALL.txt= for short installation instructions.
+
+This code comes with no warranty and with minimal documentation. 
+Please read the source code for details of the algorithms used.
+Question and suggestions are welcome. If you find the code
+useful, it would be kind to acknowledge me in your research articles.
+
+Happy mcmc'ing,
+Marko Laine <marko.laine@fmi.fi>
