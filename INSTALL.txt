@@ -1,0 +1,20 @@
+Installation instructions for the mcmc f90 library
+
+1. Read Readme.txt
+
+2. Check the Makefile
+
+3. Run make
+
+4. Copy libmcmcrun.a to /usr/local/lib/, for example, or keep it where
+   it is now.
+
+5. Check example fortran code mcmcrun.F90 in the 'testcases' directory.
+
+The calculations use BLAS and LAPACK routines so your code needs to be linked
+with these, in addition to libmcmcrun.a.
+
+If you want to use the utilities in the library other than
+mcmc_main(), your code needs to have access to the generated
+*.mod files during the compilation.
+

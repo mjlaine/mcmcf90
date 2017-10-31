@@ -1,0 +1,27 @@
+!
+! mcmcinit.nml -- initialization for modest mcmc
+!
+&mcmc
+ method      = 'dram'  ! dram or scam (exprimental)
+ nsimu       = 10000   ! length of the chain
+ burnintime  = 1000    ! burn-in time
+ doburnin    = 0       ! do scale during the burn-in
+ scalelimit  = 0.05    ! when to scale
+ scalefactor = 2.5     ! scale factor
+ drscale     = 0.0     ! DR scale (0=no DR -delayed rejection- step)
+ badaptint   = -1      ! burn-in adaptation interval, if < 0 use adaptint
+ doadapt     = 1       ! do we adapt
+ adaptint    = 100     ! interval for adaptation
+ adaptend    = 0       ! end of adaptation at this time (if >0)
+ initcmatn   = 0       ! "imaginary chain size" weight for initial proposal cmat 
+ printint    = 1000    ! interval to print statistics
+ verbosity   = 1       ! how much to print on screen
+ updatesigma = 0       ! update error variance
+ N0          = 0       ! prior for error variance, 1/s^2 ~ Gamma(N0/2,2/N/S02)
+ S02         = 1       ! 
+ priorsfile  = ''      ! file from which the prior parameters are read
+ chainfile   = 'chain.dat'    ! file to save the chain
+ s2file      = 's2chain.dat'  ! file to save sigma2 chain
+ ssfile      = 'sschain.dat'  ! file to save sum-of-squares chain
+/
+
