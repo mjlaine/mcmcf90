@@ -1,7 +1,9 @@
-* Readme.txt for mcmc f90 library, Marko Laine 2012 <marko.laine@fmi.fi>
+* MCMC f90 library
 
-Copyrights licensed under a MIT License.
-See the accompanying LICENSE.txt file for terms.
+Marko Laine 2012 <marko.laine@fmi.fi>
+
+Copyrights licensed under a MIT License.\\
+See the accompanying =LICENSE.txt= file for terms.
 
 This fortran 90 library can be used to do Markov chain Monte Carlo
 simulation from a posterior distribution of unknown model parameters
@@ -118,5 +120,5 @@ Please read the source code for details of the algorithms used.
 Question and suggestions are welcome. If you find the code
 useful, it would be kind to acknowledge me in your research articles.
 
-Happy mcmc'ing,
+Happy mcmc'ing,\\
 Marko Laine <marko.laine@fmi.fi>
