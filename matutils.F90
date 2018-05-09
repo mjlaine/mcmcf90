@@ -287,11 +287,19 @@ contains
           else
              w3 = w2
           end if
+!          cmat = cmat + w3/(wsum+w3-1.0d0) &
+!               * (wsum/(wsum+w3) &
+!               * matmul(reshape(xmean2,(/p,1/)), &
+!               reshape(xmean2,(/1,p/))) &
+          !               - cmat)
+          
+          !! new version, as matmul(reshape(x,(/p,1/)),reshape(x,(/1,p/)))
+          !! seems to generate run time error in gfortran 8.1.0
           cmat = cmat + w3/(wsum+w3-1.0d0) &
                * (wsum/(wsum+w3) &
-               * matmul(reshape(xmean2,(/p,1/)), &
-               reshape(xmean2,(/1,p/))) &
+               * outer_product(xmean2,xmean2) &
                - cmat)
+          
           !! or simplify to this (needs test)
 !          cmat = (wsum-1.0d0)/(w3+wsum-1.0d0)*cmat + &
 !               w3*wsum/(w3+wsum-1.0d0)/(w3+wsum) &
