@@ -41,10 +41,10 @@ module mcmcinit
   integer, save :: updatesigma ! do we update sigma2
   integer, save :: usrfunlen ! how many extra values to calculate?
   integer, save :: dumpint ! dump interval
-  character(len=128), save :: chainfile ! name of the chain file
-  character(len=128), save :: s2file ! name of the s2chain file
-  character(len=128), save :: ssfile ! name of the sschain file
-  character(len=128), save :: priorsfile ! name of the priors file
+  character(len=256), save :: chainfile ! name of the chain file
+  character(len=256), save :: s2file ! name of the s2chain file
+  character(len=256), save :: ssfile ! name of the sschain file
+  character(len=256), save :: priorsfile ! name of the priors file
   character(len=256), save :: cov0file ! name of the initial covmat file
   character(len=256), save :: covffile ! name of the final covmat file
   character(len=256), save :: covnfile ! file to hold the weight of covmat
@@ -62,8 +62,8 @@ module mcmcinit
   real(kind=dbl), save :: nuparam ! ram parameter
 
   !! some extra control flags
-  character(len=128), save :: s2dmpfile ! ascii dump
-  character(len=128), save :: chdmpfile ! ascii dump
+  character(len=256), save :: s2dmpfile ! ascii dump
+  character(len=256), save :: chdmpfile ! ascii dump
 !!! common control variables
   logical, save :: dodr       ! do use DR step?
   logical, save :: doscam     ! do scam
@@ -87,7 +87,7 @@ contains
     implicit none
     integer, intent(out) :: status
     integer :: fstat
-    character(len=128) :: nmlfile ! name of the 'mcmcinit.nml' file
+    character(len=256) :: nmlfile ! name of the 'mcmcinit.nml' file
     logical :: fexist
 
     status = 0
