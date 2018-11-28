@@ -27,8 +27,8 @@ endif
 ifeq ($(f90compiler),gfortran) 
 F90=gfortran
 F77=gfortran
-F90FLAGS=-DGFORTRAN -frecord-marker=4 -fconvert=little-endian
-F77FLAGS=-DGFORTRAN -frecord-marker=4 -fconvert=little-endian
+F90FLAGS=-DGFORTRAN -frecord-marker=4 -fconvert=little-endian -fpic 
+F77FLAGS=-DGFORTRAN -frecord-marker=4 -fconvert=little-endian -fpic
 ifeq ($(debug),yes)
 F90FLAGS += -g -Wall -Wconversion -fbounds-check -Wno-unused-parameter
 F77FLAGS += -g -Wall -Wconversion -fbounds-check -Wno-unused-parameter
