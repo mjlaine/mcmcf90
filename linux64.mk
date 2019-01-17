@@ -45,13 +45,14 @@ ifeq ($(f90compiler),intel)
 F90=ifort
 F77=ifort
 CC=icc
-F90FLAGS=-fpp -dps -vms -w90 -cm -Vaxlib
+# F90FLAGS=-fpp -dps -vms -w90 -cm -Vaxlib
+F90FLAGS=-fpp
 ifeq ($(debug),yes)
 F90FLAGS += -g  -W1
 else
 F90FLAGS += -O2 -ip -funroll-loops
 endif
-F77FLAGS=$(F90FLAGS) -FI -w90 -w95
+F77FLAGS=$(F90FLAGS) -FI
 endif
 
 ### PGI
