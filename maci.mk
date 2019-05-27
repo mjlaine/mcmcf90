@@ -33,9 +33,7 @@ ifeq ($(debug),yes)
 F90FLAGS += -g -Wall -Wconversion -fbounds-check -Wno-unused-parameter
 F77FLAGS += -g -Wall -Wconversion -fbounds-check -Wno-unused-parameter
 else
-F90FLAGS +=  -O3 -ftree-vectorize -mtune=native \
-            -fexternal-blas
-F77FLAGS +=  -O3 -ftree-vectorize -mtune=native \
-            -fexternal-blas
+F90FLAGS +=  -O3 -ftree-vectorize -mtune=native
+F77FLAGS +=  -O3 -ftree-vectorize -mtune=native
 endif
 endif
