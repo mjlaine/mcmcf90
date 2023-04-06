@@ -19,8 +19,8 @@ sys := $(shell uname)$(shell uname -m)
 # sys := win32
 
 # default is Linux64 (or win32) with gfortran
-system=linux64
 system=win32
+system=linux64
 f90compiler=gfortran
 
 ifeq ($(sys),Linuxi686)
