@@ -58,7 +58,8 @@ ifeq ($(sys),aix)
 endif
 
 # produce debug code?
-debug=no
+DEBUG := no
+debug=${DEBUG}
 #debug=yes
 
 ### no user modification below this, but check *.mk files ###
@@ -137,6 +138,10 @@ standalone: libmcmcrun.a
 libmcmcrun.a: $(LIBOBJ)
 	$(AR) ruv libmcmcrun.a $(LIBOBJ)
 	$(RANLIB) libmcmcrun.a
+
+install: libmcmcrun.a
+	install -d /usr/local/lib
+	install -p -m644 libmcmcrun.a /usr/local/lib
 
 ifeq ($(system),aix)
 defines_aix = $(defines:-D%=-WF,-D%)
