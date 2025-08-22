@@ -52,6 +52,10 @@ ifeq ($(sys),Darwinppc64)
  system=mac
  f90compiler=gfortran
 endif
+ifeq ($(sys),Darwinarm64)
+ system=maci
+ f90compiler=gfortran
+endif
 ifeq ($(sys),aix)
  system=aix
  f90compiler=xlf90
